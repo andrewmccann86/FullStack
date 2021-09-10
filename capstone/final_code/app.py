@@ -167,7 +167,7 @@ def create_app(test_config=None):
   # PATCH method specified.
   @app.route('/actors/<id>', methods=['PATCH'])
   @requires_auth('patch:actors')
-  def patch_movie(jwt, id):
+  def patch_actor(jwt, id):
 
     data = request.get_json()
     name = data.get('name', None)

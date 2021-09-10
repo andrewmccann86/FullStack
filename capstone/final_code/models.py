@@ -53,10 +53,10 @@ class Movies(db.Model):
 
 # Setup of Actors model
 
-class Actors(db.model):
+class Actors(db.Model):
     __tablename__ = 'actors'
 
-    id = column(Integer, primary_key=True)
+    id = Column(Integer, primary_key=True)
     name = Column(String)
     age = Column(Integer)
     gender = Column(String)
