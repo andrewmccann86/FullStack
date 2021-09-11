@@ -12,13 +12,13 @@ class CastingAgencyTestCase(unittest.TestCase):
     def setUp(self):
         # Define test variables & initialise the app.
 
-        ASSISTANT_TOKEN = 'eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6InExeUFNVDZiMVJYcDVHVHdGU3B2eiJ9.eyJpc3MiOiJodHRwczovL2Rldi0wMmxucXV1dy5ldS5hdXRoMC5jb20vIiwic3ViIjoiYXV0aDB8NjEzYjUyNjdjNTQzNTYwMDZiNTEzOWIzIiwiYXVkIjoiY2FzdGluZyIsImlhdCI6MTYzMTI3Nzg4NCwiZXhwIjoxNjMxMjg1MDg0LCJhenAiOiJTVEZVc1NUWmJPMFg2bXFZQ1VhbDVwbFhqTWlTNFJ6bSIsInNjb3BlIjoiIiwicGVybWlzc2lvbnMiOlsiZ2V0OmFjdG9ycyIsImdldDptb3ZpZXMiXX0.sRzRHD6ZkveM9aIMW_lB2LQZcsUpKfaSE94vKXaHm79iN5-FlO8cl6wAJW-8USq01flqHP_nEs4iA4AGLwebSXdGcnfSJMZih4n987_HloenJYc8hQcV547T8fIpYC62GIcqTlnP5inVzxxkLDymVFQjmBTcmrqi_TqvG5rGkb3zyPZw1WgHiYabQcS-r3gfKxlot-VJAGvKVl3hYZ8SqC_zoe44Yr2j2mAlypGyVvMnG7gRpVh_J4uoJyfN-u_cIekV5hpAf-o0yHrzvnoLFt3fW5w6Pzil8YcPlvoGGuF7PRVcp_XpBus-KbMNdFGKnLtlei_z8fh5EyAHQxNONg'
-        DIRECTOR_TOKEN = 'eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6InExeUFNVDZiMVJYcDVHVHdGU3B2eiJ9.eyJpc3MiOiJodHRwczovL2Rldi0wMmxucXV1dy5ldS5hdXRoMC5jb20vIiwic3ViIjoiYXV0aDB8NjEzYjUyOTFjNTQzNTYwMDZiNTEzOWM2IiwiYXVkIjoiY2FzdGluZyIsImlhdCI6MTYzMTI3ODI5MCwiZXhwIjoxNjMxMjg1NDkwLCJhenAiOiJTVEZVc1NUWmJPMFg2bXFZQ1VhbDVwbFhqTWlTNFJ6bSIsInNjb3BlIjoiIiwicGVybWlzc2lvbnMiOlsiZGVsZXRlOmFjdG9ycyIsImdldDphY3RvcnMiLCJnZXQ6bW92aWVzIiwicGF0Y2g6YWN0b3JzIiwicGF0Y2g6bW92aWVzIiwicG9zdDphY3RvcnMiXX0.lalUTy1xeF71PBd4fM6CM1ub4MyQALx8NmahCW8xRQP6BCUvdZNNW-4RTMRPCUk1JOQfj-Jv8NuYnyugoBALTkywUnyIzZSY7FiWsk6m7MTYq1QjCEJIb8t_a2d3fNKaj62MFmxh4WN8E4LdWNkgfyjByb3aEUsNmuWJLP9z4COi7lMsuJ678nUGM8YQDq3QsncfoS2_f1rWjwSByFwf5UZHl-cSTc7qfoJSwEvkcO5m1vl47ubTFo9D7ZL9Ea17te9yzYB9TsaATTgP6Gc5V1RxOxOBmgaDyJwygRFJylexZjjjrbEr8550FqSruGsHR--c2Wov5Ich71AAu-yGrg'
-        PRODUCER_TOKEN = 'eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6InExeUFNVDZiMVJYcDVHVHdGU3B2eiJ9.eyJpc3MiOiJodHRwczovL2Rldi0wMmxucXV1dy5ldS5hdXRoMC5jb20vIiwic3ViIjoiYXV0aDB8NjEzYjUyYmFlZWMyZGMwMDY5MTA4NzBlIiwiYXVkIjoiY2FzdGluZyIsImlhdCI6MTYzMTI3ODQ4NiwiZXhwIjoxNjMxMjg1Njg2LCJhenAiOiJTVEZVc1NUWmJPMFg2bXFZQ1VhbDVwbFhqTWlTNFJ6bSIsInNjb3BlIjoiIiwicGVybWlzc2lvbnMiOlsiZGVsZXRlOmFjdG9ycyIsImRlbGV0ZTptb3ZpZXMiLCJnZXQ6YWN0b3JzIiwiZ2V0Om1vdmllcyIsInBhdGNoOmFjdG9ycyIsInBhdGNoOm1vdmllcyIsInBvc3Q6YWN0b3JzIiwicG9zdDptb3ZpZXMiXX0.rHW9p1kr-jgOIsRcCBLiUw4F3TPUyylJb98zyedvSxCNCVggvNGiMcXSXy_CNUHtFrfp9-ewY0CkRXRhtr0ix5GhMbRqKPfwIj6M3LZgFkrC5DrEh2Mhz22p_p2A3kMxwGG3oB2rQRB6QvRzav10Q3A02gQw_TunMG8cldCtzXhwc6EariWpkodlSumdgyrZU-ipG07cu4xcixqW4OymJjMVlD7sk0ElsisB8LG3lKq4NUMxz7Fs913Eqp6QUBN165ADwMGn2G15CpaSpeasu65IVuXF0UVXm2-EL2YoI1oTEcs7PxRabkQgQge7-YxoO47hZbn-u-A5D_R685RxdA'
+        self.ASSISTANT_TOKEN = os.environ['ASSISTANT_TOKEN']
+        self.DIRECTOR_TOKEN = os.environ['DIRECTOR_TOKEN']
+        self.PRODUCER_TOKEN = os.environ['PRODUCER_TOKEN']
 
-        self.token_assistant = {'Content-Type': 'application/json', 'Authorization': ASSISTANT_TOKEN}
-        self.token_director = {'Content-Type': 'application/json', 'Authorization': DIRECTOR_TOKEN}
-        self.token_producer = {'Content-Type': 'application/json', 'Authorization': PRODUCER_TOKEN}
+        self.token_assistant = {'Content-Type': 'application/json', 'Authorization': self.ASSISTANT_TOKEN}
+        self.token_director = {'Content-Type': 'application/json', 'Authorization': self.DIRECTOR_TOKEN}
+        self.token_producer = {'Content-Type': 'application/json', 'Authorization': self.PRODUCER_TOKEN}
         self.app = create_app()
         self.client = self.app.test_client
         self.database_name = "agency_test"
