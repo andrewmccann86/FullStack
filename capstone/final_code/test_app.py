@@ -16,9 +16,9 @@ class CastingAgencyTestCase(unittest.TestCase):
         self.DIRECTOR_TOKEN = os.environ['DIRECTOR_TOKEN']
         self.PRODUCER_TOKEN = os.environ['PRODUCER_TOKEN']
 
-        self.token_assistant = {'Content-Type': 'application/json', 'Authorization': self.ASSISTANT_TOKEN}
-        self.token_director = {'Content-Type': 'application/json', 'Authorization': self.DIRECTOR_TOKEN}
-        self.token_producer = {'Content-Type': 'application/json', 'Authorization': self.PRODUCER_TOKEN}
+        self.token_assistant = {'Content-Type': 'application/json', 'Authorization': 'Bearer{}'.format(self.ASSISTANT_TOKEN)}
+        self.token_director = {'Content-Type': 'application/json', 'Authorization': 'Bearer{}'.format(self.DIRECTOR_TOKEN)}
+        self.token_producer = {'Content-Type': 'application/json', 'Authorization': 'Bearer{}'.format(self.PRODUCER_TOKEN)}
         self.app = create_app()
         self.client = self.app.test_client
         self.database_name = "agency_test"
@@ -40,7 +40,7 @@ class CastingAgencyTestCase(unittest.TestCase):
     # Movie endpoints.
     # Test created for get_movies.
     def test_get_movies(self):
-        movie = Movies(title='Akira', release_date='25-01-91 12:00 pm')
+        movie = Movies(title='Akira', release_date='25-01-1991')
         movie.insert()
         res = self.client().get('/movies', headers=self.token_producer)
         data = json.loads(res.data)
@@ -56,7 +56,7 @@ class CastingAgencyTestCase(unittest.TestCase):
 
     # Test created for post_movie.
     def test_post_movie(self):
-        res = self.client().get('/movies', headers=self.token_producer, json={'title': 'The Matrix', 'release_date': '11-06-99 12:00 pm'})
+        res = self.client().get('/movies', headers=self.token_producer, json={'title': 'The Matrix', 'release_date': '11-06-1999'})
         data = json.loads(res.data)
         self.assertEqual(res.status_code, 200)
         self.assertEqual(data['success'], True)
@@ -64,7 +64,7 @@ class CastingAgencyTestCase(unittest.TestCase):
     
     # Test created for post_movie failure.
     def test_post_movie_failure(self):
-        res = self.client().get('/movies', headers=self.token_assistant, json={'title': 'The Matrix', 'release_date': '11-06-99 12:00 pm'})
+        res = self.client().get('/movies', headers=self.token_assistant, json={'title': 'The Matrix', 'release_date': '11-06-1999'})
         data = json.loads(res.data)
         self.assertEqual(res.status_code, 401)
         self.assertEqual(data['success'], False)
@@ -74,7 +74,7 @@ class CastingAgencyTestCase(unittest.TestCase):
         movie = Movies(title='Star Wars', release_date='27-12-77 12:00 pm')
         movie.insert()
         movie_id = movie.id
-        res = self.client().patch('/movies/'+str(movie_id) + '', headers=self.token_director, json={'title': 'Star Wars: A New Hope', 'release_date': '27-12-77 12:00pm'})
+        res = self.client().patch('/movies/'+str(movie_id) + '', headers=self.token_director, json={'title': 'Star Wars: A New Hope', 'release_date': '27-12-1977'})
         data = json.loads(res.data)
         self.assertEqual(res.status_code, 200)
         self.assertEqual(data['success'], True)
@@ -85,7 +85,7 @@ class CastingAgencyTestCase(unittest.TestCase):
         movie = Movies(title='Star Wars', release_date='27-12-77 12:00 pm')
         movie.insert()
         movie_id = movie.id
-        res = self.client().patch('/movies/'+str(movie_id) + '', headers=self.token_assistant, json={'title': 'Star Wars: A New Hope', 'release_date': '27-12-77 12:00pm'})
+        res = self.client().patch('/movies/'+str(movie_id) + '', headers=self.token_assistant, json={'title': 'Star Wars: A New Hope', 'release_date': '27-12-1977'})
         data = json.loads(res.data)
         self.assertEqual(res.status_code, 200)
         self.assertEqual(data['success'], True)
@@ -93,7 +93,7 @@ class CastingAgencyTestCase(unittest.TestCase):
     
     # Test created for delete_movie.
     def test_delete_movie(self):
-        movie = Movies(title='Akira', release_date='25-01-91 12:00 pm')
+        movie = Movies(title='Akira', release_date='25-01-1991')
         movie.insert()
         movie_id = movie.id
         res = self.client().delete('/movies/'+str(movie_id) + '', headers=self.token_producer)
