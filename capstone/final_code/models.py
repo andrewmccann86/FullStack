@@ -1,5 +1,6 @@
 import os
 from sqlalchemy import Column, String, Boolean, Integer, create_engine, Date
+from flask_migrate import Migrate
 from flask_sqlalchemy import SQLAlchemy
 import json
 

@@ -56,7 +56,7 @@ class CastingAgencyTestCase(unittest.TestCase):
 
     # Test created for post_movie.
     def test_post_movie(self):
-        res = self.client().get('/movies', headers=self.token_producer, json={'title': 'The Matrix', 'release_date': '11-06-1999'})
+        res = self.client().post('/movies', headers=self.token_producer, json={'title': 'The Matrix', 'release_date': '11-06-1999'})
         data = json.loads(res.data)
         self.assertEqual(res.status_code, 200)
         self.assertEqual(data['success'], True)
@@ -64,7 +64,7 @@ class CastingAgencyTestCase(unittest.TestCase):
     
     # Test created for post_movie failure.
     def test_post_movie_failure(self):
-        res = self.client().get('/movies', headers=self.token_assistant, json={'title': 'The Matrix', 'release_date': '11-06-1999'})
+        res = self.client().post('/movies', headers=self.token_assistant, json={'title': 'The Matrix', 'release_date': '11-06-1999'})
         data = json.loads(res.data)
         self.assertEqual(res.status_code, 401)
         self.assertEqual(data['success'], False)
@@ -128,7 +128,7 @@ class CastingAgencyTestCase(unittest.TestCase):
 
     # Test created for post_actor.
     def test_post_actor(self):
-        res = self.client().get('/actors', headers=self.token_producer, json={'name': 'Hugo Weaving', 'age': 61, 'gender': 'Male'})
+        res = self.client().post('/actors', headers=self.token_producer, json={'name': 'Hugo Weaving', 'age': 61, 'gender': 'Male'})
         data = json.loads(res.data)
         self.assertEqual(res.status_code, 200)
         self.assertEqual(data['success'], True)
@@ -136,7 +136,7 @@ class CastingAgencyTestCase(unittest.TestCase):
     
     # Test created for post_actor failure.
     def test_post_actor_failure(self):
-        res = self.client().get('/actors', headers=self.token_assistant, json={'name': 'Hugo Weaving', 'age': 61, 'gender': 'Male'})
+        res = self.client().post('/actors', headers=self.token_assistant, json={'name': 'Hugo Weaving', 'age': 61, 'gender': 'Male'})
         data = json.loads(res.data)
         self.assertEqual(res.status_code, 401)
         self.assertEqual(data['success'], False)
