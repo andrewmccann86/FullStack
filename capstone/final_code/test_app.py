@@ -16,9 +16,9 @@ class CastingAgencyTestCase(unittest.TestCase):
         self.DIRECTOR_TOKEN = os.environ['DIRECTOR_TOKEN']
         self.PRODUCER_TOKEN = os.environ['PRODUCER_TOKEN']
 
-        self.token_assistant = {'Content-Type': 'application/json', 'Authorization': 'Bearer{}'.format(self.ASSISTANT_TOKEN)}
-        self.token_director = {'Content-Type': 'application/json', 'Authorization': 'Bearer{}'.format(self.DIRECTOR_TOKEN)}
-        self.token_producer = {'Content-Type': 'application/json', 'Authorization': 'Bearer{}'.format(self.PRODUCER_TOKEN)}
+        self.token_assistant = {'Content-Type': 'application/json', 'Authorization': 'Bearer {}'.format(self.ASSISTANT_TOKEN)}
+        self.token_director = {'Content-Type': 'application/json', 'Authorization': 'Bearer {}'.format(self.DIRECTOR_TOKEN)}
+        self.token_producer = {'Content-Type': 'application/json', 'Authorization': 'Bearer {}'.format(self.PRODUCER_TOKEN)}
         self.app = create_app()
         self.client = self.app.test_client
         self.database_name = "agency_test"
