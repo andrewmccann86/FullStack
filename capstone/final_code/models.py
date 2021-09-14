@@ -13,13 +13,16 @@ database_path = "postgres://{}:{}@{}/{}".format('postgres', 'ph33rth33v1l', 'loc
 
 db = SQLAlchemy()
 
+
 # Setup database config
 def setup_db(app, database_path=database_path):
     app.config["SQLALCHEMY_DATABSE_URI"] = database_path
     app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
     db.app = app
     db.init_app(app)
-   # db.create_all()
+    #db.create_all()
+    migrate = Migrate(app, db)
+
 
 # Setup of Movies model
 
