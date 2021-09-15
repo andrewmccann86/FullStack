@@ -40,7 +40,7 @@ class CastingAgencyTestCase(unittest.TestCase):
     # Movie endpoints.
     # Test created for get_movies.
     def test_get_movies(self):
-        movie = Movies(title='Akira', release_date='25-01-1991')
+        movie = Movies(title='Ghost in the Shell', release_date='08-12-1995')
         movie.insert()
         res = self.client().get('/movies', headers=self.token_producer)
         data = json.loads(res.data)
@@ -58,7 +58,7 @@ class CastingAgencyTestCase(unittest.TestCase):
     def test_post_movie(self):
         res = self.client().post('/movies', headers=self.token_producer, json={'title': 'The Matrix', 'release_date': '11-06-1999'})
         data = json.loads(res.data)
-        self.assertEqual(res.status_code, 200)
+        self.assertEqual(res.status_code, 201)
         self.assertEqual(data['success'], True)
         self.assertTrue(data['movies'])
     
@@ -92,7 +92,7 @@ class CastingAgencyTestCase(unittest.TestCase):
     
     # Test created for delete_movie.
     def test_delete_movie(self):
-        movie = Movies(title='Akira', release_date='25-01-1991')
+        movie = Movies(title='Akira', release_date='25-01-1988')
         movie.insert()
         movie_id = movie.id
         res = self.client().delete('/movies/'+str(movie_id) + '', headers=self.token_producer)
@@ -129,7 +129,7 @@ class CastingAgencyTestCase(unittest.TestCase):
     def test_post_actor(self):
         res = self.client().post('/actors', headers=self.token_producer, json={'name': 'Hugo Weaving', 'age': 61, 'gender': 'Male'})
         data = json.loads(res.data)
-        self.assertEqual(res.status_code, 200)
+        self.assertEqual(res.status_code, 201)
         self.assertEqual(data['success'], True)
         self.assertTrue(data['actors'])
     
@@ -158,7 +158,7 @@ class CastingAgencyTestCase(unittest.TestCase):
         actor_id = actor.id
         res = self.client().patch('/actors/'+str(actor_id) + '', headers=self.token_assistant, json={'name': 'Harry Ford', 'age': 79, 'gender': 'Female'})
         data = json.loads(res.data)
-        self.assertEqual(res.status_code, 401)
+        self.assertEqual(res.status_code, 403)
         self.assertEqual(data['success'], False)
     
     # Test created for delete_actor.
@@ -166,7 +166,7 @@ class CastingAgencyTestCase(unittest.TestCase):
         actor = Actors(name='Brad Pitt', age=57, gender='Male')
         actor.insert()
         actor_id = actor.id
-        res = self.client().patch('/actors/'+str(actor_id) + '', headers=self.token_producer)
+        res = self.client().delete('/actors/'+str(actor_id) + '', headers=self.token_producer)
         data = json.loads(res.data)
         self.assertEqual(res.status_code, 200)
         self.assertEqual(data['success'], True)
