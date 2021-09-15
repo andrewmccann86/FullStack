@@ -66,12 +66,12 @@ class CastingAgencyTestCase(unittest.TestCase):
     def test_post_movie_failure(self):
         res = self.client().post('/movies', headers=self.token_assistant, json={'title': 'The Matrix', 'release_date': '11-06-1999'})
         data = json.loads(res.data)
-        self.assertEqual(res.status_code, 401)
+        self.assertEqual(res.status_code, 403)
         self.assertEqual(data['success'], False)
     
     # Test created for edit_movie
     def test_edit_movie(self):
-        movie = Movies(title='Star Wars', release_date='27-12-77 12:00 pm')
+        movie = Movies(title='Star Wars', release_date='27-12-77')
         movie.insert()
         movie_id = movie.id
         res = self.client().patch('/movies/'+str(movie_id) + '', headers=self.token_director, json={'title': 'Star Wars: A New Hope', 'release_date': '27-12-1977'})
@@ -82,14 +82,13 @@ class CastingAgencyTestCase(unittest.TestCase):
     
     # Test created for edit_movie failure.
     def test_edit_movie_failure(self):
-        movie = Movies(title='Star Wars', release_date='27-12-77 12:00 pm')
+        movie = Movies(title='Star Wars: The Empire Strikes Back', release_date='20-05-1980')
         movie.insert()
         movie_id = movie.id
-        res = self.client().patch('/movies/'+str(movie_id) + '', headers=self.token_assistant, json={'title': 'Star Wars: A New Hope', 'release_date': '27-12-1977'})
+        res = self.client().patch('/movies/'+str(movie_id) + '', headers=self.token_assistant, json={'title': 'Star Wars: Return of the Jedi', 'release_date': '02-06-1983'})
         data = json.loads(res.data)
-        self.assertEqual(res.status_code, 200)
-        self.assertEqual(data['success'], True)
-        self.assertTrue(data['movies'])
+        self.assertEqual(res.status_code, 403)
+        self.assertEqual(data['success'], False)
     
     # Test created for delete_movie.
     def test_delete_movie(self):
@@ -138,12 +137,12 @@ class CastingAgencyTestCase(unittest.TestCase):
     def test_post_actor_failure(self):
         res = self.client().post('/actors', headers=self.token_assistant, json={'name': 'Hugo Weaving', 'age': 61, 'gender': 'Male'})
         data = json.loads(res.data)
-        self.assertEqual(res.status_code, 401)
+        self.assertEqual(res.status_code, 403)
         self.assertEqual(data['success'], False)
     
     # Test created for edit_actor
     def test_edit_actor(self):
-        actor = Actors(name='Scarlett Johansson', age=36, gender='Female')
+        actor = Actors(name='name Johansson', age=3, gender='Female')
         actor.insert()
         actor_id = actor.id
         res = self.client().patch('/actors/'+str(actor_id) + '', headers=self.token_director, json={'name': 'Scarlett Johansson', 'age': 36, 'gender': 'Female'})
@@ -154,18 +153,17 @@ class CastingAgencyTestCase(unittest.TestCase):
     
     # Test created for edit_actor failure.
     def test_edit_actor_failure(self):
-        actor = Actors(name='Scarlett Johansson', age=36, gender='Female')
+        actor = Actors(name='Harrison Ford', age=79, gender='male')
         actor.insert()
         actor_id = actor.id
-        res = self.client().patch('/actors/'+str(actor_id) + '', headers=self.token_assistant, json={'name': 'Scarlett Johansson', 'age': 36, 'gender': 'Female'})
+        res = self.client().patch('/actors/'+str(actor_id) + '', headers=self.token_assistant, json={'name': 'Harry Ford', 'age': 79, 'gender': 'Female'})
         data = json.loads(res.data)
-        self.assertEqual(res.status_code, 200)
-        self.assertEqual(data['success'], True)
-        self.assertTrue(data['actors'])
+        self.assertEqual(res.status_code, 401)
+        self.assertEqual(data['success'], False)
     
     # Test created for delete_actor.
     def test_delete_actor(self):
-        actor = Actors(name='Scarlett Johansson', age=36, gender='Female')
+        actor = Actors(name='Brad Pitt', age=57, gender='Male')
         actor.insert()
         actor_id = actor.id
         res = self.client().patch('/actors/'+str(actor_id) + '', headers=self.token_producer)
