@@ -159,7 +159,7 @@ def create_app(test_config=None):
       actor.insert()
       return jsonify({
         'success': True,
-        'movie': actor.format()
+        'actor': actor.format()
         }), 201
     except:
       abort(500)
@@ -194,7 +194,7 @@ def create_app(test_config=None):
       actor.update()
       return jsonify({
         'success': True,
-        'movie': [actor.format()]
+        'actor': [actor.format()]
         }), 200
     except:
       abort(404)

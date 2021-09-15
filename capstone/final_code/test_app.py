@@ -60,7 +60,7 @@ class CastingAgencyTestCase(unittest.TestCase):
         data = json.loads(res.data)
         self.assertEqual(res.status_code, 201)
         self.assertEqual(data['success'], True)
-        self.assertTrue(data['movies'])
+        self.assertTrue(data['movie'])
     
     # Test created for post_movie failure.
     def test_post_movie_failure(self):
@@ -78,7 +78,7 @@ class CastingAgencyTestCase(unittest.TestCase):
         data = json.loads(res.data)
         self.assertEqual(res.status_code, 200)
         self.assertEqual(data['success'], True)
-        self.assertTrue(data['movies'])
+        self.assertTrue(data['movie'])
     
     # Test created for edit_movie failure.
     def test_edit_movie_failure(self):
@@ -131,7 +131,7 @@ class CastingAgencyTestCase(unittest.TestCase):
         data = json.loads(res.data)
         self.assertEqual(res.status_code, 201)
         self.assertEqual(data['success'], True)
-        self.assertTrue(data['actors'])
+        self.assertTrue(data['actor'])
     
     # Test created for post_actor failure.
     def test_post_actor_failure(self):
@@ -149,7 +149,7 @@ class CastingAgencyTestCase(unittest.TestCase):
         data = json.loads(res.data)
         self.assertEqual(res.status_code, 200)
         self.assertEqual(data['success'], True)
-        self.assertTrue(data['actors'])
+        self.assertTrue(data['actor'])
     
     # Test created for edit_actor failure.
     def test_edit_actor_failure(self):
